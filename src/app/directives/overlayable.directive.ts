@@ -12,7 +12,9 @@ export class OverlayableDirective implements AfterViewInit, OnChanges{
 
   overlayElement?: HTMLElement
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(
+    private elementRef: ElementRef
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['showOverlay'] && changes['showOverlay'].currentValue != null) {
@@ -24,13 +26,13 @@ export class OverlayableDirective implements AfterViewInit, OnChanges{
     if (this.showOverlay) {
       if (this.overlayElement != undefined) {
         this.overlayElement.animate([ { opacity: 0}, { opacity: 1}], { duration: this.fadeDuration })
-        document.body.appendChild(this.overlayElement)
+        this.elementRef.nativeElement.appendChild(this.overlayElement)
       }
     } else {
       if (this.overlayElement != undefined) {
         this.overlayElement.animate([ { opacity: 1}, { opacity: 0}], { duration: this.fadeDuration })
         setTimeout(() => {
-          document.body.removeChild(this.overlayElement!)
+          this.elementRef.nativeElement.removeChild(this.overlayElement!)
         }, this.fadeDuration - 50)
       }
     }

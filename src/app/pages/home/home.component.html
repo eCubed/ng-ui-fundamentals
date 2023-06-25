@@ -1,8 +1,8 @@
 <p>home works!</p>
-<div appClickOutside (clickedOutside)="onClickedOutside()" id="testing-div">
+<div appClickOutside (clickedOutside)="onClickedOutside()" id="testing-div" appTooltip="This is the tooltip text I want">
   Testing the click
 </div>
-<div appOverlayable [show-overlay]="showOverlay" [overlay-template]="customOverlayTemplate">
+<div appOverlayable [show-overlay]="showOverlay" [overlay-template]="customOverlayTemplate" style="padding: 1em;">
   Overlayable test<br/>
   Overlayable test<br/>
 </div>
