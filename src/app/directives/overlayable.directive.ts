@@ -1,4 +1,4 @@
-import { Directive, ElementRef, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, AfterViewInit, Input, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 
 @Directive({
   selector: '[appOverlayable]',
@@ -7,6 +7,8 @@ import { Directive, ElementRef, AfterViewInit, Input, OnChanges, SimpleChanges }
 export class OverlayableDirective implements AfterViewInit, OnChanges{
 
   @Input('show-overlay') showOverlay: boolean = false
+  @Input('overlay-template') overlayTemplate?: TemplateRef<any>
+  @Input('fade-duration') fadeDuration: number = 200
 
   overlayElement?: HTMLElement
 
@@ -14,18 +16,34 @@ export class OverlayableDirective implements AfterViewInit, OnChanges{
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['showOverlay'] && changes['showOverlay'].currentValue != null) {
-      console.log('ngonchanges overlay')
-      console.log(`applying overlay: ${this.showOverlay}`)
-      if (this.showOverlay) {
+      this.manageOverlay();
+    }
+  }
 
-        if (this.overlayElement != undefined)
-          document.appendChild(this.overlayElement)
-      } else {
-        console.log('removing overlay')
-        if (this.overlayElement != undefined)
-          document.removeChild(this.overlayElement!)
+  private manageOverlay() {
+    if (this.showOverlay) {
+      if (this.overlayElement != undefined) {
+        this.overlayElement.animate([ { opacity: 0}, { opacity: 1}], { duration: this.fadeDuration })
+        document.body.appendChild(this.overlayElement)
       }
+    } else {
+      if (this.overlayElement != undefined) {
+        this.overlayElement.animate([ { opacity: 1}, { opacity: 0}], { duration: this.fadeDuration })
+        setTimeout(() => {
+          document.body.removeChild(this.overlayElement!)
+        }, this.fadeDuration - 50)
+      }
+    }
+  }
 
+  private resolveOverlayTemplate = (): HTMLElement => {
+    if (this.overlayTemplate != undefined) {
+      return this.overlayTemplate!.createEmbeddedView(null).rootNodes[0]
+    }
+    else {
+      const theOneOnTopOfOverlay = document.createElement('div')
+      theOneOnTopOfOverlay.innerHTML = 'Default Overlay'
+      return theOneOnTopOfOverlay
     }
   }
 
@@ -39,7 +57,12 @@ export class OverlayableDirective implements AfterViewInit, OnChanges{
     this.overlayElement.style.left = `${left + window.scrollX}px`
     this.overlayElement.style.top = `${top + window.scrollY}px`
     this.overlayElement.style.backgroundColor = "#cccccc77"
+    this.overlayElement.style.display= 'flex'
+    this.overlayElement.style.justifyContent = 'center'
+    this.overlayElement.style.alignItems = 'center'
+    this.overlayElement.appendChild(this.resolveOverlayTemplate())
 
+    this.manageOverlay()
   }
 
 }

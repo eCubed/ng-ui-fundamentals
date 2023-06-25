@@ -2,7 +2,11 @@
 <div appClickOutside (clickedOutside)="onClickedOutside()" id="testing-div">
   Testing the click
 </div>
-<div appOverlayable [show-overlay]="showOverlay">
+<div appOverlayable [show-overlay]="showOverlay" [overlay-template]="customOverlayTemplate">
   Overlayable test<br/>
   Overlayable test<br/>
 </div>
+<ng-template #customOverlayTemplate>
+  <div>custom overlay template</div>
+</ng-template>
+<button type="button" (click)="showOverlay = !showOverlay">Overlay toggle</button>
