@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng-ui-fundamentals:build:production"
+              "buildTarget": "ng-ui-fundamentals:build:production"
             },
             "development": {
-              "browserTarget": "ng-ui-fundamentals:build:development"
+              "buildTarget": "ng-ui-fundamentals:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-ui-fundamentals:build"
+            "buildTarget": "ng-ui-fundamentals:build"
           }
         },
         "test": {
