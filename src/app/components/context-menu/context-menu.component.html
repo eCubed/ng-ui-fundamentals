@@ -1,0 +1,10 @@
+<div class="menu">
+  @for (item of items; track $index) {
+    <div class="menu-item" (click)="selectItem(item)" [class.selected]="item == selectedItem">
+      <ng-container *ngTemplateOutlet="itemTemplate ?? defaultItemTemplate; context: { $implicit: item }"></ng-container>
+    </div>
+  }
+</div>
+<ng-template #defaultItemTemplate let-item>
+  {{ item.toString() }}
+</ng-template>

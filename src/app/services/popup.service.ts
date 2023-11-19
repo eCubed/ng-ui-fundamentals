@@ -8,7 +8,6 @@ export interface PopupOptions {
 }
 
 export class PopupRef {
-  open!: () => void
   close!: (value?: any | null) => void
   onClose?: (value?: any | null) => void
 }
@@ -36,7 +35,7 @@ export class PopupService {
     }
   }
 
-  popup<C extends any>(
+  open<C extends any>(
     componentType: Type<C>,
     popupOptions?: PopupOptions,
     supplyParameters?: (componentInstance: C) => void,
@@ -44,24 +43,6 @@ export class PopupService {
     ): PopupRef {
 
     this.popupRef = {
-      open: () => {
-        if (this.componentRef == null) {
-          this.componentRef = this.dynamicComponentService.appendComponentToBody(
-            componentType,
-            supplyParameters,
-            () => [ { provide: PopupRef, useValue: this.popupRef } ],
-            (componentElement: HTMLElement) => {
-              this.renderer.setStyle(componentElement, 'left', `${popupOptions?.absoluteX ?? 0}px`)
-              this.renderer.setStyle(componentElement, 'top', `${popupOptions?.absoluteY ?? 0}px`)
-              setStyles?.(componentElement)
-            }
-          )
-
-          setTimeout(() => {
-            document.addEventListener('click', this.handleClickOutside)
-          }, 100)
-        }
-      },
       close: (value?: any | null) => {
         if (this.componentRef != null) {
           this.popupRef.onClose?.(value)
@@ -71,6 +52,25 @@ export class PopupService {
         }
       }
     }
+
+    if (this.componentRef == null) {
+      this.componentRef = this.dynamicComponentService.appendComponentToBody(
+        componentType,
+        supplyParameters,
+        () => [ { provide: PopupRef, useValue: this.popupRef } ],
+        (componentElement: HTMLElement) => {
+          this.renderer.setStyle(componentElement, 'left', `${popupOptions?.absoluteX ?? 0}px`)
+          this.renderer.setStyle(componentElement, 'top', `${popupOptions?.absoluteY ?? 0}px`)
+          setStyles?.(componentElement)
+        }
+      )
+
+      setTimeout(() => {
+        document.addEventListener('click', this.handleClickOutside)
+      }, 100)
+    }
+
+
 
     return this.popupRef
   }

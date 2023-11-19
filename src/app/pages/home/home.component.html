@@ -12,3 +12,5 @@
 <button type="button" (click)="showOverlay = !showOverlay">Overlay toggle</button>
 <button type="button" (click)="openPopup()">Open popup</button>
 <button type="button" (click)="closePopup()">Close popup</button>
+<br/>
+<span appContextMenu [items]="contextMenuItems" (itemSelected)="onItemSelected($event)">Click me to toggle on and off</span>

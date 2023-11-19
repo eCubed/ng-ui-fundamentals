@@ -34,6 +34,7 @@ export class DynamicComponentService {
     this.appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as EmbeddedViewRef<C>).rootNodes[0] as HTMLElement
     setStyles?.(domElem)
+    domElem.animate([ { opacity: 0}, { opacity: 1}], { duration: 250 })
     document.body.appendChild(domElem)
 
 
@@ -45,7 +46,13 @@ export class DynamicComponentService {
   removeComponent<C extends any>(componentRef: ComponentRef<C>) {
 
     //if (this.appRef.)
+    const domElem = (componentRef.hostView as EmbeddedViewRef<C>).rootNodes[0] as HTMLElement
+    domElem.animate([ { opacity: 1}, { opacity: 0}], { duration: 250 })
+
+    setTimeout(() => {
       this.appRef.detachView(componentRef.hostView);
       componentRef.destroy();
+    }, 200)
+
   }
 }

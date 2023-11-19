@@ -1,0 +1,15 @@
+.menu {
+  box-shadow: 5px 7px 10px -5px rgba(0,0,0,0.29);
+  -webkit-box-shadow: 5px 7px 10px -5px rgba(0,0,0,0.29);
+  -moz-box-shadow: 5px 7px 10px -5px rgba(0,0,0,0.29);
+
+}
+
+
+.menu-item {
+  padding: 0.5em;
+
+  &.selected {
+    background-color: yellow;
+  }
+}
