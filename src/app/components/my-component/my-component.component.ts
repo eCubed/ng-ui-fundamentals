@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PopupRef } from 'src/app/services/popup.service';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -17,9 +17,8 @@ export class MyComponentComponent {
               private dialogService: DialogService) {}
 
   close() {
-    //this.popupRef.close('Cloze string...')
-
     const dialogRef = this.dialogService.open(PromptDialogComponent,
+      { dialogWidth: 300, dialogHeight: 200},
       (componentInstance) => {
         componentInstance.question = "Are you really realy sure you want to close?"
       })
@@ -27,10 +26,8 @@ export class MyComponentComponent {
     dialogRef.onClose = (answer?: any) => {
       if (answer) {
         this.popupRef.close('Yes, CLOZE.....')
-        console.log(`AnsweR: ${answer}`)
       } else {
-        console.log(`Answer: no`)
-        this.popupRef.close()
+       //console.log(`Answer: no`)
       }
     }
 

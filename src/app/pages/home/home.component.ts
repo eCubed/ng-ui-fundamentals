@@ -37,11 +37,11 @@ export class HomeComponent {
 
   openPopup() {
 
-    this.myComponentPopup = this.popupService.open(MyComponentComponent, { absoluteX: 200, absoluteY: 200}, undefined, (el: HTMLElement) => {
+    const myComponentPopup = this.popupService.open(MyComponentComponent, { absoluteX: 200, absoluteY: 200}, undefined, (el: HTMLElement) => {
       this.renderer.setStyle(el, 'position', 'absolute')
     })
 
-    this.myComponentPopup.onClose = (value?: any) => {
+    myComponentPopup.onClose = (value?: any) => {
       console.log(`The value returned from my component when I closed is: ${value}`)
     }
 

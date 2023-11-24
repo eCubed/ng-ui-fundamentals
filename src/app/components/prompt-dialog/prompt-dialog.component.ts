@@ -15,10 +15,12 @@ export class PromptDialogComponent {
   constructor(private popupRef: PopupRef) {}
 
   yes() {
+    console.log('click yes')
     this.popupRef.close('Yes')
   }
 
   no() {
+    console.log('click no')
     this.popupRef.close()
   }
 }

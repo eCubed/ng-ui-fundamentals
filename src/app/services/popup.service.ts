@@ -1,9 +1,10 @@
-import { ComponentRef, Injectable, Renderer2, RendererFactory2, Type } from '@angular/core';
+import { ComponentRef, EmbeddedViewRef, Injectable, Renderer2, RendererFactory2, Type } from '@angular/core';
 import { DynamicComponentService } from './dynamic-component.service';
 
 export interface PopupOptions {
-  absoluteX: number
-  absoluteY: number
+  absoluteX?: number
+  absoluteY?: number
+  considerClickOutside?: boolean
 }
 
 export class PopupRef {
@@ -23,25 +24,11 @@ export class PopupService {
     this.renderer = this.rendererFactory.createRenderer(null, null)
   }
 
-  /*
-  handleClickOutside = (e: MouseEvent) => {
-    console.log(`e.target: ${(e.target as HTMLElement).tagName}`)
-    if (this.componentRef != null && !this.componentRef!.location.nativeElement.contains(e.target)) {
-      this.popupRef.onClose?.()
-      this.dynamicComponentService.removeComponent(this.componentRef!)
-      this.componentRef = null
-      document.removeEventListener('click', this.handleClickOutside)
-    }
-  }
-  */
-
   generateHandleClickOutsideFunction(componentRef: ComponentRef<any>, popupRef: PopupRef) {
     const generatedHandleClickOutsideFunction = (e: MouseEvent) => {
-      console.log(`e.target: ${(e.target as HTMLElement).tagName}`)
       if (componentRef != null && !componentRef!.location.nativeElement.contains(e.target)) {
         popupRef.onClose?.()
         this.dynamicComponentService.removeComponent(componentRef!)
-        //this.componentRef = null
         document.removeEventListener('click', generatedHandleClickOutsideFunction)
       }
     }
@@ -51,7 +38,7 @@ export class PopupService {
 
   open<C extends any>(
     componentType: Type<C>,
-    popupOptions?: PopupOptions,
+    popupOptions?: PopupOptions | null,
     supplyParameters?: (componentInstance: C) => void,
     setStyles?: (componentElement: HTMLElement) => void,
     ): PopupRef {
@@ -63,7 +50,6 @@ export class PopupService {
     popupRef = {
       close: (value?: any | null) => {
         if (componentRef != null) {
-          console.log(`popupRef close function`)
           popupRef.onClose?.(value)
           this.dynamicComponentService.removeComponent(componentRef)
           if (handleClickOutsideFunction != null)
@@ -72,24 +58,30 @@ export class PopupService {
       }
     }
 
-
     componentRef = this.dynamicComponentService.appendComponentToBody(
       componentType,
       supplyParameters,
       () => [ { provide: PopupRef, useValue: popupRef } ],
       (componentElement: HTMLElement) => {
         this.renderer.setStyle(componentElement, 'position', 'absolute')
-        this.renderer.setStyle(componentElement, 'left', `${popupOptions?.absoluteX ?? 0}px`)
-        this.renderer.setStyle(componentElement, 'top', `${popupOptions?.absoluteY ?? 0}px`)
+        if (popupOptions?.absoluteX && popupOptions.absoluteY) {
+          this.renderer.setStyle(componentElement, 'left', `${popupOptions?.absoluteX ?? 0}px`)
+          this.renderer.setStyle(componentElement, 'top', `${popupOptions?.absoluteY ?? 0}px`)
+        }
+
         setStyles?.(componentElement)
       }
     )
 
-    handleClickOutsideFunction = this.generateHandleClickOutsideFunction(componentRef, popupRef)
+    if (popupOptions?.considerClickOutside == null || popupOptions.considerClickOutside) {
+      handleClickOutsideFunction = this.generateHandleClickOutsideFunction(componentRef, popupRef)
 
-    setTimeout(() => {
-      document.addEventListener('click', handleClickOutsideFunction)
-    }, 100)
+      setTimeout(() => {
+        document.addEventListener('click', handleClickOutsideFunction)
+      }, 100)
+    }
+
+
 
     return popupRef
   }
