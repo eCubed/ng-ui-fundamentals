@@ -1,0 +1,18 @@
+<h1>Inputs Test</h1>
+<app-custom-input [(value)]="valueFromCustomInput"></app-custom-input>
+<div>
+  test binding {{ valueFromCustomInput }}
+</div>
+<hr/>
+<div [formGroup]="dataFormGroup">
+  <div>
+    <label>Message</label>
+    <app-custom-input formControlName="message"></app-custom-input>
+  </div>
+  <div>
+    {{ dataFormGroup.value | json }}
+  </div>
+</div>
+<hr/>
+<app-date-picker-plop></app-date-picker-plop>
+

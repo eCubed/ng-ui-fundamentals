@@ -1,0 +1,47 @@
+.calendar {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px; /* Set a maximum width for the calendar */
+  margin: 0 auto; /* Center the calendar horizontally */
+}
+
+.month-year {
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.header {
+  display: flex;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.week {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.day {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  flex: 1;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cell:hover {
+  background-color: #e6e6e6;
+}

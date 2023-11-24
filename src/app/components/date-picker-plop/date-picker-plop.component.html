@@ -1,0 +1,14 @@
+<div class="calendar">
+  <div class="month-year">{{ currentMonth }}</div>
+  <div class="header">
+
+    <div *ngFor="let day of daysOfWeek" class="day">{{ day }}</div>
+  </div>
+  <div class="body">
+    <div class="week" *ngFor="let week of calendarGrid">
+      <div *ngFor="let day of week" class="cell" (click)="selectDate(day.date)">
+        {{ day.displayDate }}
+      </div>
+    </div>
+  </div>
+</div>
