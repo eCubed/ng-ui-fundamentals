@@ -7,6 +7,7 @@ import { TooltipDirective } from 'src/app/directives/tooltip.directive';
 import { PopupRef, PopupService } from 'src/app/services/popup.service';
 import { ContextMenuComponent } from 'src/app/components/context-menu/context-menu.component';
 import { ContextMenuDirective } from 'src/app/components/context-menu/context-menu.directive';
+import { DialogRef, DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-home',
@@ -20,10 +21,12 @@ import { ContextMenuDirective } from 'src/app/components/context-menu/context-me
 export class HomeComponent {
   showOverlay: boolean = true
   myComponentPopup!: PopupRef
+  myComponentDialog!: DialogRef
   contextMenuItems = ['Item 1', 'Item 2', 'Item 3']
 
 
   constructor(private popupService: PopupService,
+              private dialogService: DialogService,
               private renderer: Renderer2) {
 
   }
@@ -50,5 +53,13 @@ export class HomeComponent {
 
   onItemSelected(selectedItem: string) {
     console.log(`The selected item from the context menu is: ${selectedItem}`)
+  }
+
+  openDialog() {
+    this.myComponentDialog = this.dialogService.open(MyComponentComponent)
+
+    this.myComponentDialog.onClose = (value?: any) => {
+      console.log(`DIALOG...The value returned from my component when I closed is: ${value}`)
+    }
   }
 }

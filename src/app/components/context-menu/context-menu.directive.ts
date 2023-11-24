@@ -35,8 +35,8 @@ export class ContextMenuDirective<T> {
       },
       (componentElement: HTMLElement) => {
         this.renderer.setStyle(componentElement, 'width', `${ (width < 100) ? 100 : width }px`)
-        this.renderer.setStyle(componentElement.firstChild, 'width', `${ (width < 100) ? 100 : width }px`)
-        this.renderer.setStyle(componentElement.firstChild, 'background-color', '#cccccc')
+        //this.renderer.setStyle(componentElement.firstChild, 'width', `${ (width < 100) ? 100 : width }px`)
+        //this.renderer.setStyle(componentElement.firstChild, 'background-color', '#cccccc')
       }
     )
 

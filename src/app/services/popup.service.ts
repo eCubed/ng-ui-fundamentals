@@ -1,6 +1,5 @@
 import { ComponentRef, Injectable, Renderer2, RendererFactory2, Type } from '@angular/core';
 import { DynamicComponentService } from './dynamic-component.service';
-import { ClickOutsideDirective } from '../directives/click-outside.directive';
 
 export interface PopupOptions {
   absoluteX: number
@@ -27,6 +26,7 @@ export class PopupService {
   }
 
   handleClickOutside = (e: MouseEvent) => {
+    console.log(`e.target: ${(e.target as HTMLElement).tagName}`)
     if (this.componentRef != null && !this.componentRef!.location.nativeElement.contains(e.target)) {
       this.popupRef.onClose?.()
       this.dynamicComponentService.removeComponent(this.componentRef!)
@@ -59,6 +59,7 @@ export class PopupService {
         supplyParameters,
         () => [ { provide: PopupRef, useValue: this.popupRef } ],
         (componentElement: HTMLElement) => {
+          this.renderer.setStyle(componentElement, 'position', 'absolute')
           this.renderer.setStyle(componentElement, 'left', `${popupOptions?.absoluteX ?? 0}px`)
           this.renderer.setStyle(componentElement, 'top', `${popupOptions?.absoluteY ?? 0}px`)
           setStyles?.(componentElement)
