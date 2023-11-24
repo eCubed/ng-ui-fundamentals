@@ -11,10 +11,6 @@ export class DialogRef {
 })
 export class DialogService {
 
-  popupRef!: PopupRef
-  dialogRef!: DialogRef
-
-  overlay?: HTMLDivElement
   renderer!: Renderer2
 
   constructor(
@@ -43,31 +39,19 @@ export class DialogService {
     ): DialogRef {
 
     // Set up the dialog ref first.
-    this.dialogRef = {
+    const dialogRef: DialogRef = {
       close: (value?: any | null) => {
-        if (this.popupRef != null) {
-          this.dialogRef.onClose?.(value)
-        }
+          dialogRef.onClose?.(value)
       }
     }
 
     // Then plop the overlay
-    this.overlay = this.createDialogOverlay()
-    this.overlay.animate([ { opacity: 0}, { opacity: 1}], { duration: 250 })
-    document.body.appendChild(this.overlay)
-
-    this.overlay.addEventListener('click', () => {
-      /*
-      this.overlay!.animate([ { opacity: 1}, { opacity: 0}], { duration: 250 })
-      setTimeout(() => {
-        document.body.removeChild(this.overlay!)
-      }, 200)
-      */
-      this.dialogRef.close()
+    const overlay = this.createDialogOverlay()
+    overlay.animate([ { opacity: 0}, { opacity: 1}], { duration: 250 })
+    overlay.addEventListener('click', () => {
+      dialogRef.close()
     })
-
-    // We'll need to calculate the x and y coordinate!?
-    //const { width: documentWidth, height: documentHeight } = document.body.getBoundingClientRect()
+    document.body.appendChild(overlay)
 
     // Hard code the dimensions of the dialog for now
     const dialogWidth = 300
@@ -76,30 +60,29 @@ export class DialogService {
     const dialogX = (window.innerWidth - dialogWidth) / 2
     const dialogY = (window.innerHeight - dialogHeight) / 2
 
-    console.log(`dialogX, y: ${dialogX}, ${dialogY}`)
-
-    this.popupRef = this.popupService.open(
+    const popupRef = this.popupService.open(
       componentType,
       { absoluteX: dialogX, absoluteY: dialogY },
       supplyParameters,
       (componentElement: HTMLElement) => {
         this.renderer.setStyle(componentElement, 'width', `${dialogWidth}px`)
         this.renderer.setStyle(componentElement, 'height', `${dialogHeight}px`)
+        this.renderer.setStyle(componentElement, 'box-shadow', '0px 0px 7px 0px rgba(0,0,0,0.37)')
         setStyles?.(componentElement)
       }
     )
 
-    this.popupRef.onClose = (selectedItem?: any) => {
+    popupRef.onClose = (selectedItem?: any) => {
       if (selectedItem != null) {
-        this.dialogRef.close(selectedItem)
+        dialogRef.close(selectedItem)
       } else {
-        this.dialogRef.close()
+        dialogRef.close()
       }
 
-      this.overlay!.animate([ { opacity: 1}, { opacity: 0}], { duration: 250 })
+      overlay!.animate([ { opacity: 1}, { opacity: 0}], { duration: 250 })
 
       setTimeout(() => {
-        document.body.removeChild(this.overlay!)
+        document.body.removeChild(overlay!)
       }, 200)
 
     }
@@ -138,6 +121,6 @@ export class DialogService {
 
 
 
-    return this.dialogRef
+    return dialogRef
   }
 }
