@@ -13,6 +13,7 @@ export class ContextMenuDirective<T> {
   @Input() items: Array<T> = []
   @Input() itemTemplate?: TemplateRef<T>
   @Output() itemSelected: EventEmitter<T> = new EventEmitter<T>()
+  @Input('selected-color') selectedColor: string = ''
 
   popupRef!: PopupRef
   isPopupShowing = false
@@ -24,7 +25,7 @@ export class ContextMenuDirective<T> {
 
   openPopup() {
     const { x, y, height, width } = this.elementRef.nativeElement.getBoundingClientRect()
-
+    console.log(`at context menu directive, the custom selected color is ${this.selectedColor}`)
     this.popupRef = this.popupService.open(
       ContextMenuComponent,
       { absoluteX: x, absoluteY: y + height },
@@ -32,6 +33,7 @@ export class ContextMenuDirective<T> {
         contextMenuInstance.items = this.items
         contextMenuInstance.selectedItem = this.selectedItem
         contextMenuInstance.itemTemplate = this.itemTemplate
+        contextMenuInstance.selectedColor = this.selectedColor
       },
       (componentElement: HTMLElement) => {
         this.renderer.setStyle(componentElement, 'width', `${ (width < 100) ? 100 : width }px`)

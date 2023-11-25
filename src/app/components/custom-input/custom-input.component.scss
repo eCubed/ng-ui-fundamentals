@@ -1,0 +1,7 @@
+:host {
+  --bg-c: green;
+}
+
+.editable-area {
+  background-color: var(--bg-c);
+}

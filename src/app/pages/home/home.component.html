@@ -14,4 +14,4 @@
 <button type="button" (click)="closePopup()">Close popup</button>
 <button type="button" (click)="openDialog()">Open dialog</button>
 <br/>
-<span appContextMenu [items]="contextMenuItems" (itemSelected)="onItemSelected($event)">Click me to toggle on and off</span>
+<span appContextMenu [items]="contextMenuItems" (itemSelected)="onItemSelected($event)" [style.--selected-color]="'#ccccff'">Click me to toggle on and off</span>
