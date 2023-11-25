@@ -28,7 +28,8 @@ export class InputsComponent implements OnInit {
   ngOnInit(): void {
     this.dataFormGroup = new FormGroup({
       id: new FormControl(7),
-      message: new FormControl('Start')
+      message: new FormControl('Start'),
+      postedDate: new FormControl(new Date(2023,3,5))
     })
   }
 }

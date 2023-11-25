@@ -10,6 +10,10 @@
     <app-custom-input formControlName="message"></app-custom-input>
   </div>
   <div>
+    <label>Posted Date</label>
+    <app-date-picker formControlName="postedDate"></app-date-picker>
+  </div>
+  <div>
     {{ dataFormGroup.value | json }}
   </div>
 </div>
