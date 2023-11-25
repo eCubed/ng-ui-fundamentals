@@ -64,7 +64,8 @@ export class PopupService {
       () => [ { provide: PopupRef, useValue: popupRef } ],
       (componentElement: HTMLElement) => {
         this.renderer.setStyle(componentElement, 'position', 'absolute')
-        if (popupOptions?.absoluteX && popupOptions.absoluteY) {
+
+        if (popupOptions?.absoluteX != undefined && popupOptions.absoluteY != undefined) {
           this.renderer.setStyle(componentElement, 'left', `${popupOptions?.absoluteX ?? 0}px`)
           this.renderer.setStyle(componentElement, 'top', `${popupOptions?.absoluteY ?? 0}px`)
         }

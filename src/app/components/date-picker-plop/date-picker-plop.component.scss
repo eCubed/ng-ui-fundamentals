@@ -1,19 +1,32 @@
 .calendar {
   display: flex;
   flex-direction: column;
-  max-width: 400px; /* Set a maximum width for the calendar */
-  margin: 0 auto; /* Center the calendar horizontally */
+  max-width: 300px; /* Set a maximum width for the calendar */
 }
 
-.month-year {
-  text-align: center;
-  padding: 10px;
-  font-weight: bold;
-}
-
-.header {
+.navigation {
+  background-color: #dedede;
   display: flex;
-  background-color: #f0f0f0;
+  justify-content: space-between;
+
+  .pn {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .month-year {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+  }
+}
+
+
+
+.days-header {
+  display: flex;
+  background-color: #333333;
+  color: white;
   font-weight: bold;
 }
 
@@ -40,8 +53,31 @@
   padding: 10px;
   text-align: center;
   cursor: pointer;
+
+  &:hover {
+    background-color: #e6e6e6;
+  }
+
+  &.selected {
+    background-color: #333333;
+    color: white;
+
+    &:hover {
+      background-color: #555555;
+    }
+  }
+
+  &.today {
+    background-color: #cecece;
+
+    &.selected {
+      background-color: #333333;
+      color: white;
+    }
+  }
+
+  &.previous-or-next-month {
+    background-color: #efefef;
+  }
 }
 
-.cell:hover {
-  background-color: #e6e6e6;
-}

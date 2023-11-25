@@ -1,12 +1,21 @@
 <div class="calendar">
-  <div class="month-year">{{ currentMonth }}</div>
-  <div class="header">
+  <div class="navigation">
+    <div class="pn" (click)="goToPreviousMonth()">P</div>
+    <div class="month-year">{{ currentMonth }}</div>
+    <div class="pn" (click)="goToNextMonth()">N</div>
+  </div>
 
+  <div class="days-header">
     <div *ngFor="let day of daysOfWeek" class="day">{{ day }}</div>
   </div>
   <div class="body">
     <div class="week" *ngFor="let week of calendarGrid">
-      <div *ngFor="let day of week" class="cell" (click)="selectDate(day.date)">
+      <div *ngFor="let day of week"
+        class="cell"
+        (click)="selectDate(day.date)"
+        [class.today]="day.isToday"
+        [class.selected]="day.date.setHours(0,0,0,0) == date.setHours(0,0,0,0)"
+        [class.previous-or-next-month]="!day.isCurrentMonth">
         {{ day.displayDate }}
       </div>
     </div>

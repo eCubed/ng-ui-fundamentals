@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { last } from 'rxjs';
 
 interface CalendarCellItem {
   date: Date
   displayDate: number | null
+  isToday: boolean,
+  isCurrentMonth: boolean
 }
 
 @Component({
@@ -21,12 +24,16 @@ export class DatePickerPlopComponent {
   calendarGrid: CalendarCellItem[][] = [];
   currentMonth: string = ''
 
+  currentMonthBeingViewed!: Date
+
   ngOnInit() {
+
+    this.currentMonthBeingViewed = new Date(this.date.getFullYear(), this.date.getMonth(), 1)
     this.generateCalendarGrid(this.date);
   }
 
   updateCurrentMonth(): void {
-    this.currentMonth = this.date.toLocaleDateString(undefined, { month: 'long', year: 'numeric'});
+    this.currentMonth = this.currentMonthBeingViewed.toLocaleDateString(undefined, { month: 'long', year: 'numeric'});
   }
 
   private daysFromNextMonth(startDay: number, daysInMonth: number): number {
@@ -34,12 +41,13 @@ export class DatePickerPlopComponent {
   }
 
   generateCalendarGrid(selectedDate: Date): void {
-    console.log(`Selectedd ate: ${selectedDate}`)
     this.updateCurrentMonth()
     this.calendarGrid = [];
 
     // Clone the selected date to avoid mutating the original
     const currentDate = new Date(selectedDate);
+    const oneMonthAgoDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate())
+    const totalDaysInPreviousMonth = new Date(oneMonthAgoDate.getFullYear(), currentDate.getMonth(), 0).getDate()
 
     // Set the date to the first day of the month
     currentDate.setDate(1);
@@ -55,7 +63,7 @@ export class DatePickerPlopComponent {
     ).getDate();
 
     // Calculate the number of days to display from the previous month
-    const daysFromPrevMonth = startDay === 0 ? 6 : startDay;
+    const daysFromPrevMonth = startDay;
 
     // Calculate the total number of cells needed to display the calendar
     const totalCells = daysInMonth + daysFromPrevMonth + this.daysFromNextMonth(startDay, daysInMonth)
@@ -76,7 +84,7 @@ export class DatePickerPlopComponent {
         ? new Date(
             currentDate.getFullYear(),
             currentDate.getMonth() - 1,
-            daysInMonth - daysFromPrevMonth + i + 1
+            totalDaysInPreviousMonth - daysFromPrevMonth + i + 1
           )
         : isNextMonth
         ? new Date(
@@ -89,7 +97,9 @@ export class DatePickerPlopComponent {
       // Push the cell information to the current row
       currentRow.push({
         date: cellDate,
-        displayDate: isPrevMonth || isNextMonth ? null : currentDay,
+        displayDate: cellDate.getDate(),
+        isToday: cellDate.setHours(0,0,0,0) == (new Date()).setHours(0,0,0,0),
+        isCurrentMonth: !isPrevMonth && !isNextMonth
       });
 
       // If we've completed a week, start a new row
@@ -106,6 +116,23 @@ export class DatePickerPlopComponent {
   }
 
   selectDate(selectedDate: Date): void {
+    const originalDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate())
+    this.date = selectedDate
+    if (selectedDate.getFullYear() != originalDate.getFullYear() ||
+        selectedDate.getMonth() != originalDate.getMonth()) {
+      this.generateCalendarGrid(selectedDate)
+    }
     this.dateChange.emit(selectedDate);
+  }
+
+  goToPreviousMonth() {
+    this.currentMonthBeingViewed = new Date(this.currentMonthBeingViewed.getFullYear(), this.currentMonthBeingViewed.getMonth() - 1, 1)
+
+    this.generateCalendarGrid(this.currentMonthBeingViewed)
+  }
+
+  goToNextMonth() {
+    this.currentMonthBeingViewed = new Date(this.currentMonthBeingViewed.getFullYear(), this.currentMonthBeingViewed.getMonth() + 1, 1)
+    this.generateCalendarGrid(this.currentMonthBeingViewed)
   }
 }
