@@ -15,5 +15,5 @@ import { DraggableAreaDirective } from 'src/app/directives/draggable-area.direct
   styleUrl: './draggables.component.scss'
 })
 export class DraggablesComponent {
-
+  
 }
