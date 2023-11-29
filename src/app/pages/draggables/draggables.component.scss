@@ -1,0 +1,12 @@
+.draggable-box {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-color: #3498db;
+  color: #fff;
+  cursor: move;
+}
+
+.dragging {
+  opacity: 0.8;
+}

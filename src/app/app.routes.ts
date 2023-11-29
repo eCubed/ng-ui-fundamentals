@@ -9,4 +9,8 @@ export const routes: Routes = [
     path: 'inputs',
     loadComponent: () => import('./pages/inputs/inputs.component').then(m => m.InputsComponent)
   },
+  {
+    path: 'draggables',
+    loadComponent: () => import('./pages/draggables/draggables.component').then(m => m.DraggablesComponent)
+  },
 ];
