@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PopupService } from 'src/app/services/popup.service';
+import { PopupService } from 'src/app/widgets/dynamics/popup.service';
 import { DatePickerPopupComponent } from '../date-picker-popup/date-picker-popup.component';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 

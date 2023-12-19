@@ -1,7 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2, TemplateRef } from '@angular/core';
-import { PopupRef, PopupService } from 'src/app/services/popup.service';
+import { PopupRef, PopupService } from 'src/app/widgets/dynamics/popup.service';
 import { ContextMenuComponent } from './context-menu.component';
-import { ClickOutsideDirective } from 'src/app/directives/click-outside.directive';
+import { ClickOutsideDirective } from 'src/app/widgets/click-outside/click-outside.directive';
 
 @Directive({
   selector: '[appContextMenu]',

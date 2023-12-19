@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PopupRef } from 'src/app/services/popup.service';
+import { PopupRef } from 'src/app/widgets/dynamics/popup.service';
 
 @Component({
   selector: 'app-prompt-dialog',

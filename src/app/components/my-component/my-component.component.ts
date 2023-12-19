@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PopupRef } from 'src/app/services/popup.service';
-import { DialogService } from 'src/app/services/dialog.service';
+import { PopupRef } from 'src/app/widgets/dynamics/popup.service';
+import { DialogService } from 'src/app/widgets/dynamics/dialog.service';
 import { PromptDialogComponent } from '../prompt-dialog/prompt-dialog.component';
 
 @Component({

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomInputComponent } from 'src/app/components/custom-input/custom-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DatePickerPlopComponent } from 'src/app/components/date-picker-plop/date-picker-plop.component';
-import { DatePickerComponent } from 'src/app/components/date-picker/date-picker.component';
+import { CalendarComponent } from 'src/app/widgets/date-picking/calendar/calendar.component';
+import { DatePickerComponent } from 'src/app/widgets/date-picking/date-picker/date-picker.component';
 
 @Component({
   selector: 'app-inputs',
@@ -12,7 +12,7 @@ import { DatePickerComponent } from 'src/app/components/date-picker/date-picker.
     CommonModule,
     CustomInputComponent,
     ReactiveFormsModule,
-    DatePickerPlopComponent,
+    CalendarComponent,
     DatePickerComponent
   ],
   templateUrl: './inputs.component.html',

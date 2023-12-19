@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatePickerPlopComponent } from './date-picker-plop.component';
+import { CalendarComponent } from './calendar.component';
 
-describe('DatePickerPlopComponent', () => {
-  let component: DatePickerPlopComponent;
-  let fixture: ComponentFixture<DatePickerPlopComponent>;
+describe('CalendarComponent', () => {
+  let component: CalendarComponent;
+  let fixture: ComponentFixture<CalendarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DatePickerPlopComponent]
+      imports: [CalendarComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(DatePickerPlopComponent);
+
+    fixture = TestBed.createComponent(CalendarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

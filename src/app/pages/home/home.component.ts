@@ -1,13 +1,13 @@
 import { MyComponentComponent } from './../../components/my-component/my-component.component';
-import { OverlayableDirective } from './../../directives/overlayable.directive';
-import { Component, ComponentRef, Renderer2 } from '@angular/core';
+import { OverlayableDirective } from '../../widgets/overlayable/overlayable.directive';
+import { Component, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ClickOutsideDirective } from 'src/app/directives/click-outside.directive';
-import { TooltipDirective } from 'src/app/directives/tooltip.directive';
-import { PopupRef, PopupService } from 'src/app/services/popup.service';
+import { ClickOutsideDirective } from 'src/app/widgets/click-outside/click-outside.directive';
+import { TooltipDirective } from 'src/app/widgets/tooltip/tooltip.directive';
+import { PopupRef, PopupService } from 'src/app/widgets/dynamics/popup.service';
 import { ContextMenuComponent } from 'src/app/components/context-menu/context-menu.component';
 import { ContextMenuDirective } from 'src/app/components/context-menu/context-menu.directive';
-import { DialogRef, DialogService } from 'src/app/services/dialog.service';
+import { DialogRef, DialogService } from 'src/app/widgets/dynamics/dialog.service';
 
 @Component({
   selector: 'app-home',

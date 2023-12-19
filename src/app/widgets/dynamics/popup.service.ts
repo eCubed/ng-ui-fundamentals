@@ -65,10 +65,12 @@ export class PopupService {
       (componentElement: HTMLElement) => {
         this.renderer.setStyle(componentElement, 'position', 'absolute')
 
-        if (popupOptions?.absoluteX != undefined && popupOptions.absoluteY != undefined) {
+        if (popupOptions?.absoluteX != undefined)
           this.renderer.setStyle(componentElement, 'left', `${popupOptions?.absoluteX ?? 0}px`)
+
+
+        if (popupOptions?.absoluteY != undefined)
           this.renderer.setStyle(componentElement, 'top', `${popupOptions?.absoluteY ?? 0}px`)
-        }
 
         setStyles?.(componentElement)
       }
@@ -81,8 +83,6 @@ export class PopupService {
         document.addEventListener('click', handleClickOutsideFunction)
       }, 100)
     }
-
-
 
     return popupRef
   }

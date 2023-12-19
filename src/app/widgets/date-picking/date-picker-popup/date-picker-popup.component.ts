@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PopupRef } from 'src/app/services/popup.service';
-import { DatePickerPlopComponent } from '../date-picker-plop/date-picker-plop.component';
+import { PopupRef } from 'src/app/widgets/dynamics/popup.service';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-date-picker-popup',
   standalone: true,
   imports: [
     CommonModule,
-    DatePickerPlopComponent
+    CalendarComponent
   ],
   templateUrl: './date-picker-popup.component.html',
   styleUrl: './date-picker-popup.component.scss'

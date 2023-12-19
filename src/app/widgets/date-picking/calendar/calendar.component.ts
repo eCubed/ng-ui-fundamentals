@@ -10,13 +10,13 @@ interface CalendarCellItem {
 }
 
 @Component({
-  selector: 'app-date-picker-plop',
+  selector: 'app-calendar',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './date-picker-plop.component.html',
-  styleUrl: './date-picker-plop.component.scss'
+  templateUrl: './calendar.component.html',
+  styleUrl: './calendar.component.scss'
 })
-export class DatePickerPlopComponent {
+export class CalendarComponent {
   @Input() date: Date = new Date()
   @Output() dateChange = new EventEmitter<Date>();
 
