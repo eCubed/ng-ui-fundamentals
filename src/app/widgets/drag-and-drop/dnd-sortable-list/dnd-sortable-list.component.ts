@@ -29,10 +29,7 @@ export class DndSortableListComponent<T extends any> {
 
   createDroppedItemHandler(insertionPointIndex: number) {
     return (draggingItem: DraggingItem<T>) => {
-      let insertionPointIndexToUse = (insertionPointIndex == -1) ? 0 : insertionPointIndex
-      insertionPointIndexToUse = (insertionPointIndex == this.items.length - 1) ? this.items.length : insertionPointIndexToUse
-
-      this.move(this.items, draggingItem.originalIndex!, insertionPointIndexToUse)
+      this.move(this.items, draggingItem.originalIndex!, insertionPointIndex)
     }
   }
 
@@ -43,25 +40,19 @@ export class DndSortableListComponent<T extends any> {
       if (draggingItem == null)
         return false
       else {
-
-        /*
-        let insertionPointIndexToUse = (insertionPointIndex == -1) ? 0 : insertionPointIndex
-        insertionPointIndexToUse = (insertionPointIndex == this.items.length - 1) ? this.items.length : insertionPointIndexToUse
-        console.log(`orig index: ${draggingItem.originalIndex}, insertionPointIndex: ${insertionPointIndexToUse}`)
-        */
-        return (draggingItem.originalIndex != insertionPointIndex) && (draggingItem.originalIndex! - 1 != insertionPointIndex)
+        return (draggingItem.originalIndex != insertionPointIndex) && (draggingItem.originalIndex! + 1 != insertionPointIndex)
       }
     }
   }
 
   private move(input: Array<T>, from: number, to: number) {
-    let numberOfDeletedElm = 1;
-
     const elm = input.splice(from, 1)[0];
+    if (to == input.length) {
+      input.splice(to - 1, 0, elm);
+    }
+    else
+      input.splice(to, 0, elm);
 
-    numberOfDeletedElm = 0;
-
-    input.splice(to, numberOfDeletedElm, elm);
   }
 
 }

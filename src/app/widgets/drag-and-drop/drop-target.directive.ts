@@ -9,7 +9,6 @@ export class DropTargetDirective<T extends any> {
   @Input() canDropCallback?: (data?: T | null) => boolean | null
 
   @Output() dropped: EventEmitter<T> = new EventEmitter<T>(); // Emit the drop index
-  @Output() draggingOver: EventEmitter<T> = new EventEmitter<T>();
 
   constructor(protected el: ElementRef) {}
 

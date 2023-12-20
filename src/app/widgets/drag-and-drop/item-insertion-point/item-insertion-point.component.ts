@@ -10,7 +10,7 @@ import { DropTargetDirective } from '../drop-target.directive';
     {
       directive: DropTargetDirective,
       inputs: ['canDropCallback'],
-      outputs: ['dropped', 'draggingOver']
+      outputs: ['dropped']
     }
   ],
   templateUrl: './item-insertion-point.component.html',

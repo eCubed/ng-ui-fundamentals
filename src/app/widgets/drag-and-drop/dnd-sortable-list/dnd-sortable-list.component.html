@@ -1,19 +1,17 @@
-<app-item-insertion-point
-    (dropped)="createDroppedItemHandler(-1)($event)"
-    (draggingOver)="onItemDraggingOver($event)"
-    [canDropCallback]="createOnCheckCanDrop(-1)">
-</app-item-insertion-point>
-@for(item of items; track $index) {
 
+@for(item of items; track $index) {
+  <app-item-insertion-point
+    (dropped)="createDroppedItemHandler($index)($event)"
+    [canDropCallback]="createOnCheckCanDrop($index)">
+  </app-item-insertion-point>
   <div appDraggableItem [dragData]="item" [dragIndex]="$index" class="draggable-item">
     <ng-container *ngTemplateOutlet="itemTemplate ?? defaultItemTemplate; context: { $implicit: item }"></ng-container>
   </div>
-  <app-item-insertion-point
-    (dropped)="createDroppedItemHandler($index)($event)"
-    (draggingOver)="onItemDraggingOver($event)"
-    [canDropCallback]="createOnCheckCanDrop($index)">
-  </app-item-insertion-point>
 }
+<app-item-insertion-point
+    (dropped)="createDroppedItemHandler(this.items.length)($event)"
+    [canDropCallback]="createOnCheckCanDrop(this.items.length)">
+</app-item-insertion-point>
 
 
 
