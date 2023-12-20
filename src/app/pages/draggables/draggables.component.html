@@ -2,8 +2,15 @@
 <div appDraggableArea #draggableAreaRef>
   <!-- Your draggable area content -->
 
-<div appDraggable [draggableArea]="draggableAreaRef" class="draggable-box">
-  Drag me!
-</div>
+  <div appDraggable [draggableArea]="draggableAreaRef" class="draggable-box">
+    Drag me!
+  </div>
 
+</div>
+<div>
+  <app-dnd-sortable-list [items]="items"></app-dnd-sortable-list>
+
+</div>
+<div class="drop-zone" appDropTarget (dropped)="onDropped($event)">
+  Drop zone
 </div>

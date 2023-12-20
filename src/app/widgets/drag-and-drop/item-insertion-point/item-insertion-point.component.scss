@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  background-color: yellow;
+  border: solid 1px #888800;
+  height: 5px;
+
+  &.can-drop {
+    background-color: green;
+    height: 15px;
+  }
+
+  &.cannot-drop {
+    background-color: red;
+  }
+}
+
