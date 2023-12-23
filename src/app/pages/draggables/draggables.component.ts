@@ -5,6 +5,7 @@ import { DraggableAreaDirective } from 'src/app/widgets/drag-and-drop/draggable-
 import { DraggableItemDirective } from 'src/app/widgets/drag-and-drop/draggable-item.directive';
 import { DropTargetDirective } from 'src/app/widgets/drag-and-drop/drop-target.directive';
 import { DndSortableListComponent } from 'src/app/widgets/drag-and-drop/dnd-sortable-list/dnd-sortable-list.component';
+import { DraggableItemHandleDirective } from 'src/app/widgets/drag-and-drop/draggable-item-handle.directive';
 
 @Component({
   selector: 'app-draggables',
@@ -14,8 +15,9 @@ import { DndSortableListComponent } from 'src/app/widgets/drag-and-drop/dnd-sort
     DraggableDirective,
     DraggableAreaDirective,
     DraggableItemDirective,
+    DraggableItemHandleDirective,
     DropTargetDirective,
-    DndSortableListComponent
+    DndSortableListComponent,
   ],
   templateUrl: './draggables.component.html',
   styleUrl: './draggables.component.scss'
