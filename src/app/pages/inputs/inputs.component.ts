@@ -31,7 +31,12 @@ export class InputsComponent implements OnInit {
   ngOnInit(): void {
     this.dataFormGroup = new FormGroup({
       id: new FormControl(7),
-      message: new FormControl('Start'),
+      message: new FormControl(`
+      Start
+      * list 1
+      * list 2
+      New Paragraph 2 with [Google](https://www.google.com) and with the inline image ![Holiday Google Icon](https://www.google.com/logos/doodles/2023/seasonal-holidays-2023-6753651837110165-6752733080612631-cst.gif)
+    `),
       postedDate: new FormControl(new Date(2023,3,5))
     })
   }

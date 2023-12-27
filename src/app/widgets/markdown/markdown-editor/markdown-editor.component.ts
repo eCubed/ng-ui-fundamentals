@@ -67,17 +67,28 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
   }
 
   private convertMarkdownToHtml(markdown: string): string {
-    return markdown
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/__(.*?)__/g, '<u>$1</u>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>');
+    const boldRegex = /\*\*(.*?)\*\*/g;
+    const italicRegex = /\*(.*?)\*/g;
+    const underlineRegex = /__(.*?)__/g;
+    const inlineCodeRegex = /`([^`]+)`/g;
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const imageRegex = /!\[([^\]]+)\]\(([^)]+)\)/g;
+
+    const withBold = markdown.replace(boldRegex, '<strong>$1</strong>');
+    const withItalic = withBold.replace(italicRegex, '<em>$1</em>');
+    const withUnderline = withItalic.replace(underlineRegex, '<u>$1</u>');
+    const withInlineCode = withUnderline.replace(inlineCodeRegex, '<code>$1</code>');
+    const withImages = withInlineCode.replace(imageRegex, '<img alt="$1" src="$2">');
+    const withLinks = withImages.replace(linkRegex, '<a href="$2">$1</a>');
+
+
+    return withLinks;
   }
 
   private convertHeadings(html: string): string {
     const headingRegex = /^(#{1,6})\s(.*)/gm;
 
-    return html.replace(headingRegex, (match, hashes, text) => {
+    return html.replace(headingRegex, (_match, hashes, text) => {
       const level = hashes.length;
       return `<h${level}>${text.trim()}</h${level}>`;
     });
@@ -97,7 +108,6 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
 
     });
 
-    console.log(paragraphs)
     // Join the paragraphs back together
     return paragraphs.join('');
   }
