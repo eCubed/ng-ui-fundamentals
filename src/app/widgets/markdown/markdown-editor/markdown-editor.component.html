@@ -1,0 +1,7 @@
+<div class="markdown-editor-container">
+  <!-- Left half: Textarea for Markdown input -->
+  <textarea [(ngModel)]="markdownText" (input)="updatePreview()" (blur)="onTouched()"></textarea>
+
+  <!-- Right half: Live preview rendering -->
+  <div class="preview" [innerHTML]="renderedMarkdown"></div>
+</div>

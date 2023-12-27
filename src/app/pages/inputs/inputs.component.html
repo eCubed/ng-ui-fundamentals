@@ -1,13 +1,17 @@
 <h1>Inputs Test</h1>
 <app-custom-input [(value)]="valueFromCustomInput"></app-custom-input>
+<app-markdown-editor [(ngModel)]="valueFromCustomInput"></app-markdown-editor>
 <div>
-  test binding {{ valueFromCustomInput }}
+  test binding: {{ valueFromCustomInput }}
 </div>
 <hr/>
 <div [formGroup]="dataFormGroup">
   <div>
     <label>Message</label>
+    <!--
     <app-custom-input formControlName="message" [style.--bg-c]='"#ff0000"'></app-custom-input>
+    -->
+    <app-markdown-editor name="message" formControlName="message"></app-markdown-editor>
   </div>
   <div>
     <label>Posted Date</label>
@@ -21,5 +25,6 @@
 <app-calendar></app-calendar>
 <hr/>
 <app-date-picker [(date)]="selectedDate"></app-date-picker> {{ selectedDate }}
+<hr/>
 
 
