@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, bootstrapApplication } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-markdown-editor',
@@ -61,7 +61,9 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
     const inlinesProcessed = this.convertMarkdownToHtml(headingsProcessed)
     const unorderedListProcessed = this.convertLists(inlinesProcessed)
     const orderedlistProcessed = this.convertOrderedLists(unorderedListProcessed)
-    const paragraphsProcessed = this.convertNewlinesToParagraphs(orderedlistProcessed)
+    const blockQuotesProcessed = this.convertBlockQuotes(orderedlistProcessed)
+    const paragraphsProcessed = this.convertNewlinesToParagraphs(blockQuotesProcessed)
+
 
     return paragraphsProcessed
   }
@@ -186,5 +188,31 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
 
     // Join the lines back together using the original newline character
     return convertedLines.join('\n');
+  }
+
+  private convertBlockQuotes(markdownString: string): string {
+    const lines = markdownString.split(/\n/);
+
+    const convertedLines = lines.map(line => {
+
+      if (line.startsWith('<'))
+        return line
+
+      const blockQuoteRegex =  /^\>\s+(.*)/g
+      const isBlockQuoteStart = blockQuoteRegex.test(line)
+
+      if (isBlockQuoteStart) {
+        console.log(`is block quote start! ${line}`)
+        return line.replace(blockQuoteRegex, (_match, text) => {
+          const blockQuoteContentsAlreadyConvertedToHtml = this.convertMarkdownToHtml(text)
+          return `<blockquote>${blockQuoteContentsAlreadyConvertedToHtml}</blockquote>`;
+        })
+      } else {
+        return line
+      }
+    })
+
+    return convertedLines.join('\n')
+
   }
 }
