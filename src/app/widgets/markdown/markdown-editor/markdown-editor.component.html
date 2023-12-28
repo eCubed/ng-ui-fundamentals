@@ -3,5 +3,8 @@
   <textarea [(ngModel)]="markdownText" (input)="updatePreview()" (blur)="onTouched()"></textarea>
 
   <!-- Right half: Live preview rendering -->
+  <app-markdown-display class="preview" [markdown-text]="markdownText"></app-markdown-display>
+  <!--
   <div class="preview" [innerHTML]="renderedMarkdown"></div>
+  -->
 </div>
